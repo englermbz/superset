@@ -62,9 +62,7 @@ services:
   db:
     env_file:
       - path: docker/.env # default
-        required: true
       - path: docker/.env-local # optional override
-        required: false
     image: postgres:15
     container_name: superset_db
     restart: unless-stopped
@@ -77,9 +75,7 @@ services:
   superset:
     env_file:
       - path: docker/.env # default
-        required: true
       - path: docker/.env-local # optional override
-        required: false
     build:
       <<: *common-build
     container_name: superset_app
@@ -135,9 +131,7 @@ services:
     command: ["/app/docker/docker-init.sh"]
     env_file:
       - path: docker/.env # default
-        required: true
       - path: docker/.env-local # optional override
-        required: false
     depends_on: *superset-depends-on
     user: *superset-user
     volumes: *superset-volumes
@@ -156,9 +150,7 @@ services:
     command: ["/app/docker/docker-frontend.sh"]
     env_file:
       - path: docker/.env # default
-        required: true
       - path: docker/.env-local # optional override
-        required: false
     depends_on: *superset-depends-on
     volumes: *superset-volumes
 
@@ -169,9 +161,7 @@ services:
     command: ["/app/docker/docker-bootstrap.sh", "worker"]
     env_file:
       - path: docker/.env # default
-        required: true
       - path: docker/.env-local # optional override
-        required: false
     environment:
       CELERYD_CONCURRENCY: 2
     restart: unless-stopped
@@ -193,9 +183,7 @@ services:
     command: ["/app/docker/docker-bootstrap.sh", "beat"]
     env_file:
       - path: docker/.env # default
-        required: true
       - path: docker/.env-local # optional override
-        required: false
     restart: unless-stopped
     depends_on: *superset-depends-on
     user: *superset-user
